@@ -21,6 +21,7 @@ body {
 #views {
   display: flex;
   width: 100%;
+  height: 100vh;
 }
 #views #map,
 #views #panorama {
@@ -39,4 +40,15 @@ body {
 }
 .btn:hover {
   background: #ccc;
+}
+
+@media (max-width: 768px) {
+  #views {
+    flex-direction: column;
+  }
+  #views #map,
+  #views #panorama {
+    width: 100%;
+    height: 50vh;
+  }
 }/*# sourceMappingURL=style.css.map */

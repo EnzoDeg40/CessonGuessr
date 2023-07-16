@@ -21,6 +21,7 @@ body {
 #views {
   display: flex;
   width: 100%;
+  height: 100vh;
 
   #map,
   #panorama {
@@ -40,5 +41,17 @@ body {
 
   &:hover {
     background: #ccc;
+  }
+}
+
+@media (max-width: 768px) {
+  #views {
+    flex-direction: column;
+
+    #map,
+    #panorama {
+      width: 100%;
+      height: 50vh;
+    }
   }
 }

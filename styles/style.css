@@ -3,11 +3,19 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-#panel {
-  position: absolute;
-  bottom: 15px;
-  z-index: 15;
+#topPanel {
+  top: 15px;
   left: 15px;
+}
+
+#botPanel {
+  bottom: 15px;
+  left: 15px;
+}
+
+.panel {
+  position: absolute;
+  z-index: 15;
   display: flex;
   align-items: baseline;
   background-color: #1a1a2e;

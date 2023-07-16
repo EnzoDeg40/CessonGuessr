@@ -11,6 +11,12 @@ const marker = new mapboxgl.Marker()
   .setLngLat([2.598709210020017, 48.56438515629094])
   .addTo(map);
 
+const rightMarker = new mapboxgl.Marker({
+  color: "#26AE00",
+})
+  .setLngLat([0, 0])
+  .addTo(map);
+
 class Game {
   constructor() {
     // Game variables
@@ -20,16 +26,31 @@ class Game {
 
     // Round variables
     this.image = null;
-    this.userLat = null;
-    this.userLng = null;
+    this.userLat = 48.56438515629094;
+    this.userLng = 2.598709210020017;
     this.lat = null;
     this.lng = null;
     this.roundEnd = false;
+    this.distance = null;
+  }
+
+  resetMap() {
+    if (map.getLayer('line')) {
+      map.removeLayer('line');
+    }
+
+    if (map.getSource('line-source')) {
+      map.removeSource('line-source');
+    }
+
+    marker.setLngLat([2.598709210020017, 48.56438515629094]);
+    rightMarker.setLngLat([0, 0]);
   }
 
   newRound() {
     this.round++;
     this.roundEnd = false;
+    this.distance = null;
     this.image = Math.floor(Math.random() * this.maxImage) + 1;
 
     pannellum.viewer('panorama', {
@@ -41,6 +62,7 @@ class Game {
     this.lat = data[this.image - 1].gps.split(", ")[0];
     this.lng = data[this.image - 1].gps.split(", ")[1];
 
+    this.resetMap();
     this.updateUI();
   }
 
@@ -65,14 +87,54 @@ class Game {
 
     if (this.roundEnd) {
       valideDOM.style.display = "none";
-      nextDOM.style.display = "block";
+      nextDOM.style.display = "";
+      topPanelDOM.style.display = "";
+      distanceDOM.innerHTML = `Distance : ${Math.round(this.getDistanceFromLatLonInKm(this.lat, this.lng, this.userLat, this.userLng) * 1000)} m`;
       console.log("roundEnd");
     }
     else {
-      valideDOM.style.display = "block";
+      valideDOM.style.display = "";
       nextDOM.style.display = "none";
+      topPanelDOM.style.display = "none";
+      distanceDOM.innerHTML = `Distance : nullkm`;
       console.log("roundNotEnd");
     }
+  }
+
+  addLine() {
+    if (map.getLayer('line')) {
+      map.removeLayer('line');
+    }
+
+    if (map.getSource('line-source')) {
+      map.removeSource('line-source');
+    }
+    
+    rightMarker.setLngLat([this.lng, this.lat]);
+
+    let lineCoordinates = [
+      [this.lng, this.lat],
+      [this.userLng, this.userLat]
+    ];
+
+    map.addLayer({
+      id: 'line',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: lineCoordinates
+          }
+        }
+      },
+      paint: {
+        'line-color': '#9900ff', // Couleur de la ligne
+        'line-width': 2 // Épaisseur de la ligne
+      }
+    });
   }
 
   checkAnswer() {
@@ -100,26 +162,31 @@ class Game {
 
     console.log("Distance : " + distance + " km");
     console.log("Score : " + score);
-
+    
     this.score += score;
-
     this.roundEnd = true;
-
+    
+    this.addLine();
     this.updateUI();
   }
 
 }
 
 map.on('click', function (e) {
+  if (game.roundEnd) {
+    return;
+  }
   marker.setLngLat(e.lngLat);
   game.userLat = e.lngLat.lat;
   game.userLng = e.lngLat.lng;
 });
 
-const valideDOM = document.getElementById("valide");
-const nextDOM = document.getElementById("next");
+const topPanelDOM = document.getElementById("topPanel");
+const distanceDOM = document.getElementById("distance");
 const scoreDOM = document.getElementById("score");
 const mancheDOM = document.getElementById("manche");
+const valideDOM = document.getElementById("valide");
+const nextDOM = document.getElementById("next");
 
 valideDOM.addEventListener("click", function () {
   game.checkAnswer();

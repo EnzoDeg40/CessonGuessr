@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#panel {
+  position: absolute;
+  bottom: 15px;
+  z-index: 15;
+  left: 15px;
+  display: flex;
+  align-items: baseline;
+  background-color: #1a1a2e;
+  color: #fff;
+  gap: 10px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#views {
+  display: flex;
+  width: 100%;
+
+  #map,
+  #panorama {
+    width: 50%;
+    flex: 1;
+    height: 100vh;
+  }
+}
+
+.btn {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background: #ccc;
+  }
+}

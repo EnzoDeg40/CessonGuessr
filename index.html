@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cesson Guessr</title>
+  <!-- SEO -->
+  <meta name="description" content="Guessr - Trouvez l'endroit sur la carte à partir d'une vue 360° spécifique à la ville de Cesson.">
+  <meta name="keywords" content="Guessr, carte, jeu, localisation, Cesson">
+  <meta name="author" content="Enzo Degraeve - EdStudio">
+  <!-- OG -->
+  <meta property="og:title" content="Guessr - Jeu de localisation">
+  <meta property="og:description" content="Guessr - Trouvez l'endroit sur la carte à partir d'une vue 360° spécifique à la ville de Cesson.">
+  <!-- Mapbox -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+  <!-- Pannellum -->
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- Native -->
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/script.js" defer></script>
+</head>
+
+<body>
+  <div id="panel">
+    <span id="score">Score : 0</span>
+    <span id="manche">Manche : 1 / 5</span>
+    <span id="valide" class="btn">Valider</span>
+  </div>
+
+  <div id="views">
+    <div id="map"></div>
+    <div id="panorama"></div>
+  </div>
+</body>
+
+</html>

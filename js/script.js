@@ -34,9 +34,13 @@ class Game {
     this.distance = null;
   }
 
-  resetMap() {
-    if (map.getLayer('line')) {
-      map.removeLayer('line');
+  resetMap() {    
+    if (map.getLayer('line' + this.round)) {
+      map.removeLayer('line' + this.round);
+    }
+
+    if (map.getLayer('line' + (this.round-1))) {
+      map.removeLayer('line' + (this.round-1));
     }
 
     if (map.getSource('line-source')) {
@@ -102,8 +106,12 @@ class Game {
   }
 
   addLine() {
-    if (map.getLayer('line')) {
-      map.removeLayer('line');
+    if (map.getLayer('line' + this.round)) {
+      map.removeLayer('line' + this.round);
+    }
+
+    if (map.getLayer('line' + (this.round-1))) {
+      map.removeLayer('line' + (this.round-1));
     }
 
     if (map.getSource('line-source')) {
@@ -118,7 +126,7 @@ class Game {
     ];
 
     map.addLayer({
-      id: 'line',
+      id: 'line' + this.round,
       type: 'line',
       source: {
         type: 'geojson',
